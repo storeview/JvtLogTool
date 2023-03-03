@@ -1,0 +1,90 @@
+﻿<Window x:Class="JvtLogTool.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:JvtLogTool"
+        mc:Ignorable="d"
+        Title="JVT 日志工具" Height="800" Width="600" ResizeMode="CanMinimize" Icon="JvtLogTool.ico" WindowStartupLocation="CenterScreen"  >
+
+    <Grid Background="White">
+        <Menu Background="White">
+            <MenuItem Header="设置">
+                <MenuItem Header="偏好设置" Click="SettingBtn_Click"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="关于">
+                <MenuItem Header="检查更新"  Click="CheckUpdateBtn_Click"></MenuItem>
+                <MenuItem x:Name="VersionHeader" Header="软件版本" Click="VersionBtn_Click"></MenuItem>
+            </MenuItem>
+        </Menu>
+
+
+        <GroupBox x:Name="groupBox" Header="Telnet 登录" HorizontalAlignment="Left" Width="500" Margin="28,31,0,0" Padding="10,10,10,5" VerticalAlignment="Top" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0">设备IP地址</Label>
+                <TextBox x:Name="ipBox" Grid.Row="0" Grid.Column="1" VerticalContentAlignment="Center" >192.168.1.88</TextBox>
+                <Label Grid.Row="1" Grid.Column="0">Telnet用户名</Label>
+                <TextBox x:Name="usernameBox"  Grid.Row="1" Grid.Column="1" VerticalContentAlignment="Center">root</TextBox>
+                <Label Grid.Row="2" Grid.Column="0">Telnet密码</Label>
+                <PasswordBox  x:Name="passwordBox" Grid.Row="2" Grid.Column="1" VerticalContentAlignment="Center"></PasswordBox>
+                <Button x:Name="telnetReconnectBtn" Content="登录" Width="75" RenderTransformOrigin="4.053,2.263"  Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" Click="TelnetLoginBtn_Click"/>
+            </Grid>
+        </GroupBox>
+
+        <GroupBox x:Name="groupBox1" Header="setconsole 运行日志" HorizontalAlignment="Left" Margin="28,167,0,0"  Padding="10,10,10,5" VerticalAlignment="Top" Width="500" Height="200">
+            <TextBox x:Name="setconsoleLogBox" Focusable="False" Margin="0,0,-1,0" TextWrapping="NoWrap" IsReadOnly="True"  Text="" Width="480" Background="Black" Foreground="White" />
+        </GroupBox>
+
+        <GroupBox x:Name="groupBox2" Header="选择需打包的文件" HorizontalAlignment="Left" Margin="28,411,0,0" Padding="10,10,10,5" VerticalAlignment="Top" Width="500">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+
+
+                <CheckBox x:Name="syslogCbx" Content="syslog" Grid.Row="0" Grid.Column="0" IsChecked="True"></CheckBox>
+                <CheckBox x:Name="setconsoleCbx" Content="setconsole 运行日志" Grid.Row="0" Grid.Column="1" IsChecked="True"></CheckBox>
+                <CheckBox x:Name="screenshotCbx" Content="web 截图文件" Grid.Row="0" Grid.Column="2" IsChecked="False" IsEnabled="False" ToolTip="暂时不支持，后续加上"></CheckBox>
+                <CheckBox x:Name="databaseCbx" Content="数据库文件" Grid.Row="1" Grid.Column="0"  IsChecked="False" IsEnabled="False" ToolTip="暂时不支持，后续加上"></CheckBox>
+                
+                <!--
+                    <CheckBox x:Name="otherCbx" Content="其他设备文件（填写文件的绝对路径，换行区分文件）" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" Margin="0, 10, 0, 0" IsChecked="True"></CheckBox>
+                    <TextBox  x:Name="otherPath" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Height="50" AcceptsReturn="True"/>
+                -->
+            </Grid>
+        </GroupBox>
+        <Button x:Name="button" Content="开始打包" HorizontalAlignment="Left" Margin="437,562,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.438,1.77" Click="Package_Button_Click"/>
+
+
+        <GroupBox x:Name="groupBox3" Header="日志" Width="500" Height="100" HorizontalAlignment="Left" Margin="28,641,0,0" VerticalAlignment="Top" Opacity="0.7" BorderThickness="0">
+            <TextBox x:Name="softwareLog" IsReadOnly="True" BorderThickness="0,0,0,1"></TextBox>
+        </GroupBox>
+
+        <Ellipse x:Name="telnetStatus" Fill="#ff0000" HorizontalAlignment="Left" Height="10" Margin="437,21,0,0" Stroke="Black" VerticalAlignment="Top" Width="10" RenderTransformOrigin="-2.133,0.663" ToolTip="绿色代表 Telnet 连接成功，红色代表异常"/>
+        <Label x:Name="label" Content="Telnet 服务" HorizontalAlignment="Left" Margin="447,14,0,0" VerticalAlignment="Top" ToolTip="使用 Telnet 和设备通信"/>
+
+        <Ellipse x:Name="tftpServerStatus" Fill="#ff0000" HorizontalAlignment="Left" Height="10" Margin="437,401,0,0" Stroke="Black" VerticalAlignment="Top" Width="10" RenderTransformOrigin="-2.133,0.663" ToolTip="绿色代表 TFTP 服务器建立成功，红色代表异常"/>
+        <Label x:Name="label2" Content="本机 TFTP 服务" HorizontalAlignment="Left" Margin="452,394,0,0" VerticalAlignment="Top" ToolTip="设备传输文件到电脑，需要 TFTP 协议"/>
+
+    </Grid>
+</Window>

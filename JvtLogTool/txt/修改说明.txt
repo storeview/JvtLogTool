@@ -1,0 +1,13 @@
+2022-9-20
+V1.0.1版本发布
+	修复了一些Bug
+	1.删除setconsole中的出现的123
+	2.更改“tftp服务”为“本机tftp服务”
+	3.将现有代码统一了编程规范，参考微软官方C#文档：https://docs.microsoft.com/en-us/dotnet/csharp/fundamentals/coding-style/coding-conventions
+	4.设备断开网络以后，Telnet状态栏也进行变化。添加心跳机制，一定时间内出现足够多的空白包，则ping设备IP地址，检测Telnet连接是否正常
+	5.优化Telnet『连接』按钮的使用
+
+2022-9-09
+V1.0.0版本发布
+	- 支持Telnet连接设备，并显示setconsole运行日志信息
+	- 支持TFTP传输文件并打包
